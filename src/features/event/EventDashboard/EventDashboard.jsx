@@ -118,6 +118,9 @@ export default function EventDashboard() {
         setOpen(false)
         setSelectedEvent(null)
     }
+    const handleDeleteEvent = id =>{
+        setEvents(events.filter(e=>e.id!==id)
+        )}
     return (
         <div>
             <Grid>
@@ -125,6 +128,7 @@ export default function EventDashboard() {
                     <EventList 
                     selectEvent ={handleSelectEvent}
                     events={events} 
+                    deleteEvent={handleDeleteEvent}
                     />
                 </Grid.Column>
                 <Grid.Column width={6}>
