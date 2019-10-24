@@ -14,8 +14,11 @@ export default function EventForm(props) {
    const {title,date,city,venue,hostedBy} = fields
     //Component did mount
    useEffect(()=>{
+       console.log(selectedEvent)
        setFields({...selectedEvent})
    },[selectedEvent])
+
+
     
     //need to set as a single OBJECT
     const handleFormSubmit = e => {
@@ -28,6 +31,8 @@ const handleChange = name => e => {
         setFields({...fields, [name]:e.target.value});
 
     }
+
+  
  
     return (
               <Segment>
