@@ -104,6 +104,20 @@ export default function EventDashboard() {
         setOpen(true)
 
     }
+    const handleUpdateEvent = updatedEvent =>{
+        setEvents(events.map(event=>{
+            if(event.id===updatedEvent.id){
+                return{...updatedEvent}
+            }else{
+                return event
+            }
+        }
+        )
+        
+        )
+        setOpen(false)
+        setSelectedEvent(null)
+    }
     return (
         <div>
             <Grid>
@@ -118,7 +132,7 @@ export default function EventDashboard() {
                     {isOpen && <EventForm createEvent ={handleCreateEvent}
                     cancelFormOpen={handleFormCancel} 
                     selectedEvent={selectedEvent}
-                   
+                    updateEvent={handleUpdateEvent}
                     />}
                     
                 </Grid.Column>

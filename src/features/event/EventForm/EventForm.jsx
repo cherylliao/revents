@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import {Segment, Form, Button } from 'semantic-ui-react'
 
 export default function EventForm(props) {
-    const {cancelFormOpen,createEvent,selectedEvent} = props;
+    const {cancelFormOpen,createEvent,selectedEvent,updateEvent} = props;
 
     const [fields, setFields] = useState({
         title:'',
@@ -23,9 +23,13 @@ export default function EventForm(props) {
     //need to set as a single OBJECT
     const handleFormSubmit = e => {
         e.preventDefault()
-        props.createEvent(fields)
-        
-        
+        if(fields.id){
+            updateEvent(fields)
+
+        }else{
+            createEvent(fields)
+
+        }
     }
 const handleChange = name => e => {
         setFields({...fields, [name]:e.target.value});
