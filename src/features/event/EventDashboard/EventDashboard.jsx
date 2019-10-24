@@ -59,9 +59,20 @@ const eventsFromDashboard = [
 export default function EventDashboard() {
     const [events,setEvents] =useState(eventsFromDashboard);
     const [isOpen,setOpen] = useState(false);
+    const [selectedEvent,setSelectedEvent] = useState(null);
 
-    const handleFormOpen =() =>{
-        !isOpen ? setOpen(true) : setOpen(false);
+    // const handleFormOpen =() =>{
+    //     !isOpen ? setOpen(true) : setOpen(false);
+    // }
+
+    const handleCreateFormOpen =() =>{
+        setOpen(true)
+        setSelectedEvent(null)
+    }
+
+    const handleFormCancel =() =>{
+        setOpen(false)
+        
     }
 
     const handleCreateEvent =(newEvent) => {
@@ -70,16 +81,27 @@ export default function EventDashboard() {
         setEvents([...events,newEvent])
         setOpen(false)
     }
+
+    const handleSelectEvent = event =>{
+        setSelectedEvent(event)
+        setOpen(true)
+
+    }
     return (
         <div>
             <Grid>
                 <Grid.Column width={10}>
-                    <EventList events={events} />
+                    <EventList 
+                    selectEvent ={handleSelectEvent}
+                    events={events} 
+                    />
                 </Grid.Column>
                 <Grid.Column width={6}>
-                    <Button onClick={handleFormOpen} positive content ='Create Event' />
+                    <Button onClick={handleCreateFormOpen} positive content ='Create Event' />
                     {isOpen && <EventForm createEvent ={handleCreateEvent}
-                    cancelFormOpen={handleFormOpen} />}
+                    cancelFormOpen={handleFormCancel} 
+                    selectedEvent={selectedEvent}
+                    />}
                     
                 </Grid.Column>
             </Grid>

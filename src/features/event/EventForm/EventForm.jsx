@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import {Segment, Form, Button } from 'semantic-ui-react'
 
 export default function EventForm(props) {
-    const {cancelFormOpen,createEvent} = props;
+    const {cancelFormOpen,createEvent,selectedEvent} = props;
 
     const [fields, setFields] = useState({
         title:'',
@@ -12,18 +12,20 @@ export default function EventForm(props) {
         hostedBy:''
     })
    const {title,date,city,venue,hostedBy} = fields
-    
-   
+    //Component did mount
+   useEffect(()=>{
+       setFields({...selectedEvent})
+   },[selectedEvent])
     
     //need to set as a single OBJECT
-    const handleFormSubmit = event => {
-        event.preventDefault()
+    const handleFormSubmit = e => {
+        e.preventDefault()
         props.createEvent(fields)
         
         
     }
-const handleChange = name => event => {
-        setFields({...fields, [name]:event.target.value});
+const handleChange = name => e => {
+        setFields({...fields, [name]:e.target.value});
 
     }
  

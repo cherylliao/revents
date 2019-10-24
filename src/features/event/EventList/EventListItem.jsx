@@ -37,7 +37,7 @@ export default function EventListItem(props) {
                 </Segment>
                 <Segment clearing>
                     <span>{props.event.description}</span>
-                  <Button as="a" color="teal" floated="right" content="View" />
+                  <Button onClick={()=> props.selectEvent(props.event)} as="a" color="teal" floated="right" content="View" />
                 </Segment>
               </Segment.Group>
     )
