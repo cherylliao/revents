@@ -8,7 +8,7 @@ export default function App() {
         <Fragment>
         <NavBar />
         <Container className="main">
-            
+            //set the events properties
             <EventDashboard />
         </Container>
         </Fragment>

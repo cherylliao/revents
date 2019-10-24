@@ -2,44 +2,39 @@ import React, {useState} from 'react'
 import {Segment, Form, Button } from 'semantic-ui-react'
 
 export default function EventForm(props) {
-    const {cancelFormOpen} = props;
-    
-    const [title,setTitle] =useState('')
-    const [date,setDate] =useState('')
-    const [city,setCity] =useState('')
-    const [venue,setVenue] =useState('')
-    const [hostedBy,setHost] =useState('')
-    
+    const {cancelFormOpen,createEvent} = props;
 
-    const handleFormSubmit = e => {
-        e.preventDefault();
-        console.log(city,venue)
+    const [fields, setFields] = useState({
+        title:'',
+        date:'',
+        city:'',
+        venue: '',
+        hostedBy:''
+    })
+   const {title,date,city,venue,hostedBy} = fields
+    
+   
+    
+    //need to set as a single OBJECT
+    const handleFormSubmit = event => {
+        event.preventDefault()
+        props.createEvent(fields)
         
         
     }
-    const handleTitleChange = e => {
-        setTitle(e.target.value)
-   }
-   const handleDateChange = e => {
-    setDate(e.target.value)
-}
-const handleCityChange = e => {
-    setCity(e.target.value)
-}
-const handleVenueChange = e => {
-    setVenue(e.target.value)
-}
-const handleHostChange = e => {
-    setHost(e.target.value)
-}
+const handleChange = name => event => {
+        setFields({...fields, [name]:event.target.value});
+
+    }
+ 
     return (
               <Segment>
-                <Form onSubmit={handleFormSubmit} autoComplete ="off">
+                <Form onSubmit={handleFormSubmit} >
                   <Form.Field>
                     <label>Event Title</label>
                     <input 
-                    name="title" 
-                    onChange = { handleTitleChange} 
+                    
+                    onChange = { handleChange('title')} 
                     value = {title} 
                     placeholder="Event Title" 
                     />
@@ -47,16 +42,14 @@ const handleHostChange = e => {
                   <Form.Field>
                     <label>Event Date</label>
                     <input type="date" 
-                    name="date" 
-                    onChange = { handleDateChange} 
+                    onChange = { handleChange('date')} 
                     value = {date} 
                     placeholder="Event Date" />
                   </Form.Field>
                   <Form.Field>
                     <label>City</label>
                     <input 
-                    name="city" 
-                    onChange = { handleCityChange} 
+                    onChange = { handleChange('city')} 
                     value = {city} 
                     placeholder="City event is taking place" 
                     />
@@ -64,16 +57,14 @@ const handleHostChange = e => {
                   <Form.Field>
                     <label>Venue</label>
                     <input 
-                    name="venue" 
-                    onChange = { handleVenueChange} 
+                    onChange = { handleChange('venue')} 
                     value = {venue} 
                     placeholder="Enter the Venue of the event" />
                   </Form.Field>
                   <Form.Field>
                     <label>Hosted By</label>
                     <input 
-                    name="hostedBy" 
-                    onChange = { handleHostChange} 
+                    onChange = { handleChange('hostedBy')} 
                     value = {hostedBy} 
                     placeholder="Enter the name of person hosting" />
                   </Form.Field>

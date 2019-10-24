@@ -27,7 +27,7 @@ export default function EventListItem(props) {
                 </Segment>
                 <Segment secondary>
                   <List horizontal>
-                  {props.event.attendees.map(attendee => (
+                  {props.event.attendees&&props.event.attendees.map(attendee => (
                     <EventListAttendee key={attendee.id} attendee={attendee}/>
 
                   ))}
