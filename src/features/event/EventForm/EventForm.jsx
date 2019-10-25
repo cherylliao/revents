@@ -14,7 +14,7 @@ export default function EventForm(props) {
    const {title,date,city,venue,hostedBy} = fields
     //Component did mount
    useEffect(()=>{
-       console.log(selectedEvent)
+       
        setFields({...selectedEvent})
    },[selectedEvent])
 
