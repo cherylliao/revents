@@ -1,8 +1,33 @@
 import React, {useState,useEffect} from 'react'
+import {connect} from 'react-redux'
 import {Segment, Form, Button } from 'semantic-ui-react'
+import {createEvent, updateEvent} from '../eventActions'
+import cuid from 'cuid'
 
-export default function EventForm(props) {
-    const {cancelFormOpen,createEvent,selectedEvent,updateEvent} = props;
+const mapState = (state,ownProps) =>{
+  const eventId=ownProps.match.params.id;
+
+  let event={
+    title:'',
+    date:'',
+    city:'',
+    venue: '',
+    hostedBy:''
+
+  }
+  if(eventId && state.events.length>0){
+    event=state.events.filter(event =>event.id===eventId)[0]
+  }
+  return {event}
+}
+
+const actions ={
+  createEvent, updateEvent
+}
+
+const EventForm=(props)=> {
+    const {createEvent,selectedEvent,updateEvent,history,event} = props;
+
 
     const [fields, setFields] = useState({
         title:'',
@@ -15,8 +40,8 @@ export default function EventForm(props) {
     //Component did mount
    useEffect(()=>{
        
-       setFields({...selectedEvent})
-   },[selectedEvent])
+       setFields({...event})
+   },[event])
 
 
     
@@ -25,9 +50,16 @@ export default function EventForm(props) {
         e.preventDefault()
         if(fields.id){
             updateEvent(fields)
+            history.push(`/events/${fields.id}`)
 
         }else{
-            createEvent(fields)
+            const newEvent ={
+              ...fields,
+              id:cuid(),
+              hostPhotoURL : 'assets/user.png'
+            }
+            createEvent(newEvent)
+            history.push(`/events`)
 
         }
     }
@@ -82,8 +114,10 @@ const handleChange = name => e => {
                   <Button positive type="submit">
                     Submit
                   </Button>
-                  <Button onClick ={cancelFormOpen} type="button">Cancel</Button>
+                  <Button onClick ={history.goBack} type="button">Cancel</Button>
                 </Form>
               </Segment>
     )
 }
+
+export default connect(mapState,actions)(EventForm);

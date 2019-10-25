@@ -26,7 +26,7 @@ export default function App() {
                     <Route path='/people' component={PeopleDashboard} />
                     <Route path='/profile/:id' component={UserDetailedPage} />
                     <Route path='/settings' component={SettingsDashboard} />
-                    <Route path='/createEvent' component={EventForm} />
+                    <Route path={['/createEvent','/manage/:id']} component={EventForm} />
                     <Route path='/test' component={TestComponent} />
                    
                 </Container>
