@@ -1,19 +1,20 @@
 import React from 'react'
 import {Segment, Item, Icon, List, Button} from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee'
+import { Link } from 'react-router-dom';
 
-export default function EventListItem(props) {
+export default function EventListItem({event,deleteEvent}) {
     return (
              <Segment.Group>
                 <Segment>
                   <Item.Group>
                     <Item>
                       <Item.Image size="tiny" circular 
-                      src={props.event.hostPhotoURL} />
+                      src={event.hostPhotoURL} />
                       <Item.Content>
-                        <Item.Header >{props.event.title}</Item.Header>
+                        <Item.Header >{event.title}</Item.Header>
                         <Item.Description>
-                          Hosted by {props.event.hostedBy}
+                          Hosted by {event.hostedBy}
                         </Item.Description>
                       </Item.Content>
                     </Item>
@@ -21,13 +22,13 @@ export default function EventListItem(props) {
                 </Segment>
                 <Segment>
                   <span>
-                    <Icon name="clock" /> {props.event.date} |
-                    <Icon name="marker" /> {props.event.venue}
+                    <Icon name="clock" /> {event.date} |
+                    <Icon name="marker" /> {event.venue}
                   </span>
                 </Segment>
                 <Segment secondary>
                   <List horizontal>
-                  {props.event.attendees&&props.event.attendees.map(attendee => (
+                  {event.attendees&&event.attendees.map(attendee => (
                     <EventListAttendee key={attendee.id} attendee={attendee}/>
 
                   ))}
@@ -36,13 +37,13 @@ export default function EventListItem(props) {
                   </List>
                 </Segment>
                 <Segment clearing>
-                    <span>{props.event.description}</span>
+                    <span>{event.description}</span>
                     <Button 
-                  onClick={()=> props.deleteEvent(props.event.id)} 
+                  onClick={()=> deleteEvent(event.id)} 
                   as="a" color="red" floated="right" content="Delete" />
                   <Button 
-                  onClick={()=> props.selectEvent(props.event)} 
-                  as="a" color="teal" floated="right" content="View" />
+                  
+                  as={Link} to={`/events/${event.id}`}color="teal" floated="right" content="View" />
                 </Segment>
               </Segment.Group>
     )
