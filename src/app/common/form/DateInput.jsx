@@ -6,17 +6,22 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-const DateInput = ({meta:{touched,error},...rest}) => {
-    const [date,setDate] = useState(new Date())
+const DateInput = ({input,meta:{touched,error},...rest}) => {
+    // const [date,setDate] = useState('')
 
-    const handleChange = date => {
-        setDate(date);
-      };
+    // const handleChange = date => {
+    //     setDate(date);
+    //   };
+   
   return (
       <Form.Field error={touched && !!error}>
-    <DatePicker {...rest}
-        selected={date}
-        onChange={handleChange}
+    <DatePicker {...rest}{...input}
+        selected={input.value ? new Date(input.value):null}
+        onChange={input.onChange}
+        onBlur={input.onBlur}
+       
+
+        
       />
       {touched && error && <Label basic color ='red'>{error}</Label>}
       </Form.Field>

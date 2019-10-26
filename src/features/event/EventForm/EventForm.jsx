@@ -36,6 +36,7 @@ const validate=combineValidators({
   )(),
   city:isRequired({message:'required'}),
   venue:isRequired({message:'required'})
+  
 })
 
 const category = [
@@ -103,7 +104,12 @@ const handleChange = name => e => {
                   <Header sub color='teal' content='Event Location' />
                   <Field name='city' component={TextInput} placeholder='city' />
                   <Field name='venue' component={TextInput} placeholder='venue' />
-                  <Field name='date' component={DateInput} placeholder='date' />
+                  <Field name='date' 
+                  component={DateInput} 
+                  dateFormat ='dd LLL yyyy h:mm a'
+                  showTimeSelect
+                  timeFormat = 'HH:mm'
+                  placeholder='date' />
                
                 
                   <Button disabled={invalid ||submitting || pristine} positive type="submit">
