@@ -9,6 +9,7 @@ import cuid from 'cuid'
 import TextInput from '../../../app/common/form/TextInput'
 import TextArea from '../../../app/common/form/TextArea'
 import SelectInput from '../../../app/common/form/SelectInput'
+import DateInput from '../../../app/common/form/DateInput'
 
 const mapState = (state,ownProps) =>{
   const eventId=ownProps.match.params.id;
@@ -102,7 +103,7 @@ const handleChange = name => e => {
                   <Header sub color='teal' content='Event Location' />
                   <Field name='city' component={TextInput} placeholder='city' />
                   <Field name='venue' component={TextInput} placeholder='venue' />
-                  <Field name='date' component={TextInput} placeholder='date' />
+                  <Field name='date' component={DateInput} placeholder='date' />
                
                 
                   <Button disabled={invalid ||submitting || pristine} positive type="submit">
