@@ -13,6 +13,7 @@ import SelectInput from '../../../app/common/form/SelectInput'
 import DateInput from '../../../app/common/form/DateInput'
 import PlaceInput from '../../../app/common/form/PlaceInput'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import SimpleMap from '../../testarea/SimpleMap'
 
 const mapState = (state,ownProps) =>{
   const eventId=ownProps.match.params.id;
@@ -158,6 +159,7 @@ const handleChange = name => e => {
                   type="button">Cancel</Button>
                 </Form>
               </Segment>
+              <SimpleMap />
 
         </Grid.Column>
       </Grid>
