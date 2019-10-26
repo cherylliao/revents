@@ -101,7 +101,9 @@ const handleChange = name => e => {
                   <Button positive type="submit">
                     Submit
                   </Button>
-                  <Button onClick ={history.goBack} type="button">Cancel</Button>
+                  <Button onClick ={initialValues.id ? () => history.push(`/events/${initialValues.id}`)
+                  :() => history.push('/events')} 
+                  type="button">Cancel</Button>
                 </Form>
               </Segment>
 
