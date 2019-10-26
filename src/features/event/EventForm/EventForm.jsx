@@ -1,8 +1,11 @@
 import React, {useState,useEffect} from 'react'
 import {connect} from 'react-redux'
+import {reduxForm,Field} from 'redux-form'
 import {Segment, Form, Button } from 'semantic-ui-react'
 import {createEvent, updateEvent} from '../eventActions'
 import cuid from 'cuid'
+
+import TextInput from '../../../app/common/form/TextInput'
 
 const mapState = (state,ownProps) =>{
   const eventId=ownProps.match.params.id;
@@ -73,15 +76,7 @@ const handleChange = name => e => {
     return (
               <Segment>
                 <Form onSubmit={handleFormSubmit} >
-                  <Form.Field>
-                    <label>Event Title</label>
-                    <input 
-                    
-                    onChange = { handleChange('title')} 
-                    value = {title} 
-                    placeholder="Event Title" 
-                    />
-                  </Form.Field>
+                  <Field name='title' component={TextInput} placeholder='Event Title' />
                   <Form.Field>
                     <label>Event Date</label>
                     <input type="date" 
@@ -111,6 +106,7 @@ const handleChange = name => e => {
                     value = {hostedBy} 
                     placeholder="Enter the name of person hosting" />
                   </Form.Field>
+                
                   <Button positive type="submit">
                     Submit
                   </Button>
@@ -120,4 +116,4 @@ const handleChange = name => e => {
     )
 }
 
-export default connect(mapState,actions)(EventForm);
+export default connect(mapState,actions)(reduxForm({form:'eventForm'})(EventForm));
