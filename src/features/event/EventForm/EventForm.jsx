@@ -13,17 +13,12 @@ const mapState = (state,ownProps) =>{
   const eventId=ownProps.match.params.id;
 
   let event={
-    title:'',
-    date:'',
-    city:'',
-    venue: '',
-    hostedBy:''
-
+   
   }
   if(eventId && state.events.length>0){
     event=state.events.filter(event =>event.id===eventId)[0]
   }
-  return {event}
+  return {initialValues:event}
 }
 
 const actions ={
@@ -40,7 +35,7 @@ const category = [
 ];
 
 const EventForm=(props)=> {
-    const {createEvent,selectedEvent,updateEvent,history,event} = props;
+    const {createEvent,selectedEvent,updateEvent,history,event,handleSubmit,initialValues} = props;
 
 
     const [fields, setFields] = useState({
@@ -60,20 +55,21 @@ const EventForm=(props)=> {
 
     
     //need to set as a single OBJECT
-    const handleFormSubmit = e => {
-        e.preventDefault()
-        if(fields.id){
-            updateEvent(fields)
-            history.push(`/events/${fields.id}`)
+    const onFormSubmit = values => {
+       
+        if(initialValues.id){
+            updateEvent(values)
+            history.push(`/events/${initialValues.id}`)
 
         }else{
             const newEvent ={
-              ...fields,
+              ...values,
               id:cuid(),
-              hostPhotoURL : 'assets/user.png'
+              hostPhotoURL : 'assets/user.png',
+              hostedBy:'Bob'
             }
             createEvent(newEvent)
-            history.push(`/events`)
+            history.push(`/events/${newEvent.id}`)
 
         }
     }
@@ -89,7 +85,7 @@ const handleChange = name => e => {
         <Grid.Column width={10}>
         <Segment>
           <Header sub color='teal' content='Event Details' />
-                <Form onSubmit={handleFormSubmit} >
+                <Form onSubmit={handleSubmit(onFormSubmit)} >
                   <Field name='title' component={TextInput} placeholder='Event Title' />
                   <Field name='category' 
                   options={category}
