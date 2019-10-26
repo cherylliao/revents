@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {connect} from 'react-redux'
 import {reduxForm,Field} from 'redux-form'
+import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan} from 'revalidate'
 import {Segment, Form, Button, Grid, Header } from 'semantic-ui-react'
 import {createEvent, updateEvent} from '../eventActions'
 import cuid from 'cuid'
@@ -25,6 +26,17 @@ const actions ={
   createEvent, updateEvent
 }
 
+const validate=combineValidators({
+  title:isRequired({message:'required'}),
+  category:isRequired({message:'required'}),
+  description:composeValidators(
+    isRequired({message:'required'}),
+    hasLengthGreaterThan(4)({message:'too short'})
+  )(),
+  city:isRequired({message:'required'}),
+  venue:isRequired({message:'required'})
+})
+
 const category = [
     {key: 'drinks', text: 'Drinks', value: 'drinks'},
     {key: 'culture', text: 'Culture', value: 'culture'},
@@ -35,7 +47,8 @@ const category = [
 ];
 
 const EventForm=(props)=> {
-    const {createEvent,selectedEvent,updateEvent,history,event,handleSubmit,initialValues} = props;
+    const {createEvent,selectedEvent,updateEvent,history,event,handleSubmit,initialValues
+    ,invalid,submitting,pristine} = props;
 
 
     const [fields, setFields] = useState({
@@ -47,13 +60,7 @@ const EventForm=(props)=> {
     })
    const {title,date,city,venue,hostedBy} = fields
     //Component did mount
-   useEffect(()=>{
-       
-       setFields({...event})
-   },[event])
-
-
-    
+ 
     //need to set as a single OBJECT
     const onFormSubmit = values => {
        
@@ -98,7 +105,7 @@ const handleChange = name => e => {
                   <Field name='date' component={TextInput} placeholder='date' />
                
                 
-                  <Button positive type="submit">
+                  <Button disabled={invalid ||submitting || pristine} positive type="submit">
                     Submit
                   </Button>
                   <Button onClick ={initialValues.id ? () => history.push(`/events/${initialValues.id}`)
@@ -113,4 +120,4 @@ const handleChange = name => e => {
     )
 }
 
-export default connect(mapState,actions)(reduxForm({form:'eventForm'})(EventForm));
+export default connect(mapState,actions)(reduxForm({form:'eventForm',validate})(EventForm));
