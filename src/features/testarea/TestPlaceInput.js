@@ -14,12 +14,7 @@ class TestPlaceInput extends React.Component {
     this.setState({ address });
   };
 
-  handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
-  };
+
 
   render() {
     const {selectAddress} = this.props

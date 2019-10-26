@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Segment, Grid, Icon,Button } from 'semantic-ui-react'
+import EventDetailedMap from './EventDetailedMap'
 
 const EventDetailedInfo = ({event}) => {
+  const[isMapOpen,showMapToggle]=useState(false)
   return (
        <Segment.Group>
           <Segment attached="top">
@@ -33,12 +35,26 @@ const EventDetailedInfo = ({event}) => {
                 <span>{event.venue}</span>
               </Grid.Column>
               <Grid.Column width={4}>
-                <Button color="teal" size="tiny" content="Show Map" />
+                <Button onClick ={()=>showMapToggle(!isMapOpen)} color="teal" size="tiny" content="Show Map" />
               </Grid.Column>
             </Grid>
           </Segment>
+          {isMapOpen &&
+          <EventDetailedMap center={event.venueLatLng} />}
         </Segment.Group>
   )
 }
 
 export default EventDetailedInfo
+
+//pass the coordiates down to the venue field
+// const handleVenueSelect = selectedVenue => {
+//     geocodeByAddress(selectedVenue)
+//     .then(results=>getLatLng(results[0]))
+//     .then(latlng => {
+//       setVenueLatLng(latlng)
+//     })
+//     .then(()=>{
+//       props.change('venue',selectedVenue)
+//     })
+//   }

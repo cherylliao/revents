@@ -159,7 +159,7 @@ const handleChange = name => e => {
                   type="button">Cancel</Button>
                 </Form>
               </Segment>
-              <SimpleMap />
+              
 
         </Grid.Column>
       </Grid>
