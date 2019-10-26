@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {connect} from 'react-redux'
 import {reduxForm,Field} from 'redux-form'
-import {Segment, Form, Button } from 'semantic-ui-react'
+import {Segment, Form, Button, Grid, Header } from 'semantic-ui-react'
 import {createEvent, updateEvent} from '../eventActions'
 import cuid from 'cuid'
 
@@ -74,38 +74,19 @@ const handleChange = name => e => {
   
  
     return (
-              <Segment>
+      <Grid>
+        <Grid.Column width={10}>
+        <Segment>
+          <Header sub color='teal' content='Event Details' />
                 <Form onSubmit={handleFormSubmit} >
                   <Field name='title' component={TextInput} placeholder='Event Title' />
-                  <Form.Field>
-                    <label>Event Date</label>
-                    <input type="date" 
-                    onChange = { handleChange('date')} 
-                    value = {date} 
-                    placeholder="Event Date" />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>City</label>
-                    <input 
-                    onChange = { handleChange('city')} 
-                    value = {city} 
-                    placeholder="City event is taking place" 
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Venue</label>
-                    <input 
-                    onChange = { handleChange('venue')} 
-                    value = {venue} 
-                    placeholder="Enter the Venue of the event" />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Hosted By</label>
-                    <input 
-                    onChange = { handleChange('hostedBy')} 
-                    value = {hostedBy} 
-                    placeholder="Enter the name of person hosting" />
-                  </Form.Field>
+                  <Field name='category' component={TextInput} placeholder='about' />
+                  <Field name='description' component={TextInput} placeholder='description' />
+                  <Header sub color='teal' content='Event Location' />
+                  <Field name='city' component={TextInput} placeholder='city' />
+                  <Field name='venue' component={TextInput} placeholder='venue' />
+                  <Field name='date' component={TextInput} placeholder='date' />
+               
                 
                   <Button positive type="submit">
                     Submit
@@ -113,6 +94,10 @@ const handleChange = name => e => {
                   <Button onClick ={history.goBack} type="button">Cancel</Button>
                 </Form>
               </Segment>
+
+        </Grid.Column>
+      </Grid>
+              
     )
 }
 
