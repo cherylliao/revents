@@ -1,3 +1,4 @@
+/*global google*/
 import React, {useState,useEffect} from 'react'
 import {connect} from 'react-redux'
 import {reduxForm,Field} from 'redux-form'
@@ -10,6 +11,8 @@ import TextInput from '../../../app/common/form/TextInput'
 import TextArea from '../../../app/common/form/TextArea'
 import SelectInput from '../../../app/common/form/SelectInput'
 import DateInput from '../../../app/common/form/DateInput'
+import PlaceInput from '../../../app/common/form/PlaceInput'
+import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
 const mapState = (state,ownProps) =>{
   const eventId=ownProps.match.params.id;
@@ -61,11 +64,13 @@ const EventForm=(props)=> {
         hostedBy:''
     })
    const {title,date,city,venue,hostedBy} = fields
-    //Component did mount
+    //states of the city 
+    const [cityLatLng, setCityLatLng] = useState(null)
+    const [venueLatLng, setVenueLatLng] = useState(null)
  
-    //need to set as a single OBJECT
+   
     const onFormSubmit = values => {
-       
+       values.venueLatLng=venueLatLng
         if(initialValues.id){
             updateEvent(values)
             history.push(`/events/${initialValues.id}`)
@@ -82,6 +87,29 @@ const EventForm=(props)=> {
 
         }
     }
+
+    const handleCitySelect = selectedCity => {
+      geocodeByAddress(selectedCity)
+      .then(results=>getLatLng(results[0]))
+      .then(latlng => {
+        setCityLatLng(latlng)
+      })
+      .then(()=>{
+        props.change('city',selectedCity)
+      })
+    }
+//pass the coordiates down to the venue field
+    const handleVenueSelect = selectedVenue => {
+      geocodeByAddress(selectedVenue)
+      .then(results=>getLatLng(results[0]))
+      .then(latlng => {
+        setVenueLatLng(latlng)
+      })
+      .then(()=>{
+        props.change('venue',selectedVenue)
+      })
+    }
+
 const handleChange = name => e => {
         setFields({...fields, [name]:e.target.value});
 
@@ -102,8 +130,18 @@ const handleChange = name => e => {
                   placeholder='about' />
                   <Field name='description' component={TextArea} rows={3} placeholder='description' />
                   <Header sub color='teal' content='Event Location' />
-                  <Field name='city' component={TextInput} placeholder='city' />
-                  <Field name='venue' component={TextInput} placeholder='venue' />
+                  <Field name='city' component={PlaceInput} 
+                  options={{types:['(cities)']}}
+                  onSelect = {handleCitySelect}
+                  placeholder='city' />
+                  <Field name='venue' component={PlaceInput} 
+                  options={{
+                    location: new google.maps.LatLng(cityLatLng),
+                    radius:1000,
+                    types:['establishment']
+                  }}
+                  onSelect ={handleVenueSelect}
+                  placeholder='venue' />
                   <Field name='date' 
                   component={DateInput} 
                   dateFormat ='dd LLL yyyy h:mm a'
