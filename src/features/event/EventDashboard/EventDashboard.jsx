@@ -6,6 +6,7 @@ import cuid from 'cuid';
 import {connect} from 'react-redux'
 import {deleteEvent,updateEvent,createEvent} from '../eventActions'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import EventActivity from '../EventActivity/EventActivity';
 
 const mapState = state =>({
   events:state.events,
@@ -37,7 +38,7 @@ const EventDashboard=({events,deleteEvent,updateEvent,createEvent,loading})=> {
                     />
                 </Grid.Column>
                 <Grid.Column width={6}>
-                    <h2>Activity Feed</h2>
+                    <EventActivity />
                 </Grid.Column>
             </Grid>
         </div>
