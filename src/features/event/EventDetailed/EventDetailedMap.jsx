@@ -15,11 +15,11 @@ const EventDetailedMap = ({center}) => {
           defaultCenter={center}
           defaultZoom={zoom}
         >
-          <Marker
+          {center &&< Marker
             lat={center.lat}
             lng={center.lng}
             
-          />
+          />}
         </GoogleMapReact>
       </div>
       
