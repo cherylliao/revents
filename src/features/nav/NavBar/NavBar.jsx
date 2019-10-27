@@ -1,15 +1,25 @@
 import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import {Menu, Container, Button} from 'semantic-ui-react'
 import {NavLink, Link,withRouter} from 'react-router-dom'
 import SignedOutMenu from '../Menus/SignedOutMenu'
 import SignedInMenu from '../Menus/SignedInMenu'
+import {openModal} from '../../modals/modalActions'
 
-const NavBar=({history})=> {
+const actions = {
+  openModal
+}
+
+const NavBar=({history, openModal})=> {
    const [auth,setAuth]=useState(false)
-   const handleSignIn =()=>setAuth(true);
+   const handleSignIn =()=>openModal('LoginModal');
    const handleSignOut =()=>{
      setAuth(false);
      history.push('/')
+   }
+
+   const handleRegister = () =>{
+     openModal('RegisterModal')
    }
     return (
              <Menu inverted fixed="top">
@@ -25,10 +35,10 @@ const NavBar=({history})=> {
                    <Button as={Link} to='/createEvent' floated="right" positive inverted content="Create Event" />
                  </Menu.Item>
                  {auth? <SignedInMenu signOut={handleSignOut}/>:
-                 <SignedOutMenu signIn={handleSignIn} />}
+                 <SignedOutMenu signIn={handleSignIn} register ={handleRegister}/>}
                  
                </Container>
              </Menu>
     )
 }
-export default withRouter(NavBar);
+export default withRouter(connect(null,actions)(NavBar));

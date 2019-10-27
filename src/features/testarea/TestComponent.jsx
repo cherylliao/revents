@@ -9,6 +9,8 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 
+import {openModal} from '../modals/modalActions'
+
 
 const mapState = (state) =>({
     data:state.test.data
@@ -16,13 +18,14 @@ const mapState = (state) =>({
 
 const actions = {
     incrementCounter,
-    decrementCounter
+    decrementCounter,
+    openModal
 
 }
 
 
 
-const TestComponent = ({data,incrementCounter,decrementCounter}) => {
+const TestComponent = ({data,incrementCounter,decrementCounter, openModal}) => {
   const [center,setCenter]=useState({
     lat: 59.95,
     lng: 30.33
@@ -41,6 +44,10 @@ const handleSelect = address => {
       <h3>the answer is {data}</h3>
       <Button onClick={incrementCounter} positive content='Increment' />
       <Button onClick={decrementCounter} negative content='Decrement' />
+      <Button 
+      onClick={()=>openModal('TestModal',{data:42})} 
+      color='teal' 
+      content='Open Modal' />
       <TestPlaceInput selectAddress={handleSelect}/>
       <SimpleMap key={center.lng} center={center}/>
       <br/>
