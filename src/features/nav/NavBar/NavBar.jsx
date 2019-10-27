@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,Fragment} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Container, Button} from 'semantic-ui-react'
 import {NavLink, Link,withRouter} from 'react-router-dom'
@@ -38,11 +38,14 @@ const NavBar=({history, openModal, auth, logout})=> {
                    Re-vents
                  </Menu.Item>
                  <Menu.Item as ={NavLink} exact to='/events' name="Events" />
+                 {authenticated &&(
+                 <Fragment>
                  <Menu.Item as ={NavLink} to='/people' name="People" />
                  <Menu.Item as ={NavLink} to='/test' name="Test" />
                  <Menu.Item>
                    <Button as={Link} to='/createEvent' floated="right" positive inverted content="Create Event" />
                  </Menu.Item>
+                 </Fragment>)}
                  {authenticated? <SignedInMenu signOut={handleSignOut} currentUser = {auth.currentUser}/>:
                  <SignedOutMenu signIn={handleSignIn} register ={handleRegister}/>}
                  

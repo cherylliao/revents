@@ -5,9 +5,11 @@ import EventList from '../EventList/EventList'
 import cuid from 'cuid';
 import {connect} from 'react-redux'
 import {deleteEvent,updateEvent,createEvent} from '../eventActions'
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 
 const mapState = state =>({
-  events:state.events
+  events:state.events,
+  loading: state.async.loading
 })
 const actions = {
   createEvent,
@@ -16,13 +18,14 @@ const actions = {
 } 
 
 
-const EventDashboard=({events,deleteEvent,updateEvent,createEvent})=> {
+const EventDashboard=({events,deleteEvent,updateEvent,createEvent,loading})=> {
     
  
 
     const handleDeleteEvent = id =>{
         deleteEvent(id)
         }
+        if(loading) return <LoadingComponent  />
     return (
         <div>
             <Grid>
