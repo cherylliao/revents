@@ -1,19 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Modal} from 'semantic-ui-react';
-import {connect} from 'react-redux';
 
-import {closeModal} from "./modalActions";
 import RegisterForm from "../auth/Register/RegisterForm";
 
-const actions = {closeModal};
 
-class RegisterModal extends Component {
-    render() {
+
+const RegisterModal =()=> {
+    
         return (
+            
             <Modal
                 size='mini'
+                
                 open={true}
-                onClose={this.props.closeModal}
+                
             >
                 <Modal.Header>
                     Sign Up to Re-vents!
@@ -25,7 +25,7 @@ class RegisterModal extends Component {
                 </Modal.Content>
             </Modal>
         );
-    }
+    
 }
 
-export default connect(null, actions)(RegisterModal);
+export default RegisterModal;
