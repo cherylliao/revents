@@ -51,7 +51,7 @@ const NavBar=({history, openModal, auth, logout})=> {
                  </Menu.Item>
                  </Fragment>
                  <SignedInMenu signOut={handleSignOut} currentUser = {auth.currentUser}/>:
-                 <SignedOutMenu signIn={handleSignIn} register ={handleRegister}/>
+                 <SignedOutMenu signIn={handleSignIn} />
                  
                </Container>
              </Menu>

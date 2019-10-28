@@ -12,6 +12,7 @@ import EventForm from '../../features/event/EventForm/EventForm'
 import TestComponent from '../../features/testarea/TestComponent'
 import ModalManager from '../../features/modals/ModalManager'
 import RegisterForm from '../../features/auth/Register/RegisterForm'
+import LoginForm from '../../features/auth/Login/LoginForm'
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                 
                 <Container className="main">
                     <Route path="/signup" exact component={RegisterForm} />
+                    <Route path="/signin" exact component={LoginForm} />
                     <Route exact path='/events' component={EventDashboard} />
                     <Route path='/events/:id' component={EventDetailedPage} />
                     <Route path='/people' component={PeopleDashboard} />

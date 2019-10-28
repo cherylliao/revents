@@ -1,7 +1,8 @@
 import React from 'react'
 import { Menu,Image, Dropdown} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
-
+import {signOut} from '../../auth/authActions'
+//import signOut again.
 const SignedInMenu = ({signOut, currentUser}) => {
   return (
         <Menu.Item position="right">
