@@ -47,11 +47,11 @@ const NavBar=({history, openModal, auth, logout})=> {
                  <Menu.Item as ={NavLink} to='/test' name="Test" />
                  <Menu.Item>
                    <Button as={Link} to='/createEvent' floated="right" positive inverted content="Create Event" />
-                   <Button as={Link} to='/signup' floated="right" positive inverted content="Register" />
+                   {/* <Button as={Link} to='/signup' floated="right" positive inverted content="Register" /> */}
                  </Menu.Item>
                  </Fragment>
                  <SignedInMenu signOut={handleSignOut} currentUser = {auth.currentUser}/>:
-                 {/* <SignedOutMenu signIn={handleSignIn} register ={handleRegister}/> */}
+                 <SignedOutMenu signIn={handleSignIn} register ={handleRegister}/>
                  
                </Container>
              </Menu>
