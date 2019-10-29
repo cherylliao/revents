@@ -1,38 +1,106 @@
 import React from 'react';
-import { Form, Segment, Button } from 'semantic-ui-react';
-import { Field, reduxForm } from 'redux-form';
-import TextInput from '../../../app/common/form/TextInput';
 
-const RegisterForm = () => {
-  return (
-    <div>
-      <Form size="large">
-        <Segment>
-          <Field
-            name="displayName"
-            type="text"
-            component={TextInput}
-            placeholder="Known As"
-          />
-          <Field
-            name="email"
-            type="text"
-            component={TextInput}
-            placeholder="Email"
-          />
-          <Field
-            name="password"
-            type="password"
-            component={TextInput}
-            placeholder="Password"
-          />
-          <Button fluid size="large" color="teal">
-            Register
-          </Button>
-        </Segment>
-      </Form>
-    </div>
-  );
-};
+import FormInput from '../../../app/common/form/form-input.component';
 
-export default reduxForm({form:'registerForm'})(RegisterForm);
+
+import { auth, createUserProfileDocument } from '../firebase.utils';
+
+
+import CustomButton from '../../../app/common/form/custom-button.component';
+
+// import './sign-up.styles.scss';
+
+class RegisterForm extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      displayName: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    };
+  }
+
+  handleSubmit = async event => {
+    event.preventDefault();
+
+    const { displayName, email, password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
+      alert("passwords don't match");
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      await createUserProfileDocument(user, { displayName });
+
+      this.setState({
+        displayName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  handleChange = event => {
+    const { name, value } = event.target;
+
+    this.setState({ [name]: value });
+  };
+
+  render() {
+    const { displayName, email, password, confirmPassword } = this.state;
+    return (
+      <div className='sign-up'>
+        <h2 className='title'>I do not have a account</h2>
+        <span>Sign up with your email and password</span>
+        <form className='sign-up-form' onSubmit={this.handleSubmit}>
+          <FormInput
+            type='text'
+            name='displayName'
+            value={displayName}
+            onChange={this.handleChange}
+            label='Display Name'
+            required
+          />
+          <FormInput
+            type='email'
+            name='email'
+            value={email}
+            onChange={this.handleChange}
+            label='Email'
+            required
+          />
+          <FormInput
+            type='password'
+            name='password'
+            value={password}
+            onChange={this.handleChange}
+            label='Password'
+            required
+          />
+          <FormInput
+            type='password'
+            name='confirmPassword'
+            value={confirmPassword}
+            onChange={this.handleChange}
+            label='Confirm Password'
+            required
+          />
+          <CustomButton type='submit'>SIGN UP</CustomButton>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default RegisterForm;
